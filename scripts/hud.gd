@@ -9,4 +9,5 @@ func _ready():
 
 func add_coin():
 	coins += 1
+	print("+1 Coin!")
 	coin_count.text = str(coins)
