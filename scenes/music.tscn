@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bombh8ohe85ls"]
+
+[ext_resource type="AudioStream" uid="uid://cksq8u5kgbi5r" path="res://music/hunter_in_the_forest.mp3" id="1_qw2cy"]
+
+[node name="Music" type="AudioStreamPlayer2D"]
+position = Vector2(-113, -77)
+stream = ExtResource("1_qw2cy")
+autoplay = true
+bus = &"Music"
