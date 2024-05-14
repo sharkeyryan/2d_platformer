@@ -279,7 +279,7 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8jg47"]
-radius = 8.0
+radius = 5.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gb2tv"]
 size = Vector2(16, 24)
@@ -295,14 +295,21 @@ animation = &"attack"
 frame = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, -15)
+position = Vector2(0, -16)
 shape = SubResource("CapsuleShape2D_8jg47")
 
-[node name="AttackArea" type="Area2D" parent="."]
-position = Vector2(0, -28)
+[node name="AttackAreaRight" type="Area2D" parent="." groups=["Sword"]]
+position = Vector2(16, -17)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
-position = Vector2(17, 11)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackAreaRight"]
 shape = SubResource("RectangleShape2D_gb2tv")
+disabled = true
+
+[node name="AttackAreaLeft" type="Area2D" parent="." groups=["Sword"]]
+position = Vector2(-16, -17)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackAreaLeft"]
+shape = SubResource("RectangleShape2D_gb2tv")
+disabled = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

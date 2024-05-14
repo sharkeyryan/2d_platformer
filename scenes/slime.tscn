@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://b4tjgro40wqpj"]
+[gd_scene load_steps=18 format=3 uid="uid://b4tjgro40wqpj"]
 
 [ext_resource type="Script" path="res://sprites/slime.gd" id="1_64i4e"]
 [ext_resource type="Texture2D" uid="uid://f6bjw5y25civ" path="res://sprites/slime_purple.png" id="1_gan7k"]
 [ext_resource type="PackedScene" uid="uid://cq8cx5k5loga" path="res://scenes/killzone.tscn" id="2_3afdu"]
+[ext_resource type="Script" path="res://scenes/Hitbox.gd" id="3_uli73"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wwtae"]
 atlas = ExtResource("1_gan7k")
@@ -19,6 +20,30 @@ region = Rect2(48, 24, 24, 24)
 [sub_resource type="AtlasTexture" id="AtlasTexture_uagox"]
 atlas = ExtResource("1_gan7k")
 region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qqaky"]
+atlas = ExtResource("1_gan7k")
+region = Rect2(48, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2dopt"]
+atlas = ExtResource("1_gan7k")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5q6yo"]
+atlas = ExtResource("1_gan7k")
+region = Rect2(72, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t3cce"]
+atlas = ExtResource("1_gan7k")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_me7pp"]
+atlas = ExtResource("1_gan7k")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5pnm"]
+atlas = ExtResource("1_gan7k")
+region = Rect2(0, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_kjkyk"]
 animations = [{
@@ -38,7 +63,36 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qqaky")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qqaky")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2dopt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5q6yo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t3cce")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_me7pp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5pnm")
+}],
+"loop": true,
+"name": &"die",
+"speed": 4.0
 }]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lf4ow"]
+size = Vector2(10, 12)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aqbxd"]
 size = Vector2(10, 14)
@@ -49,8 +103,16 @@ script = ExtResource("1_64i4e")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_kjkyk")
+animation = &"die"
 autoplay = "default"
-frame_progress = 0.580252
+frame_progress = 0.652434
+
+[node name="Hitbox" type="Area2D" parent="."]
+script = ExtResource("3_uli73")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_lf4ow")
 
 [node name="killzone" parent="." instance=ExtResource("2_3afdu")]
 position = Vector2(0, -12)
@@ -66,3 +128,5 @@ target_position = Vector2(9, 0)
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 position = Vector2(0, -7)
 target_position = Vector2(-9, 0)
+
+[connection signal="area_entered" from="Hitbox" to="Hitbox" method="_on_area_entered"]
