@@ -8,6 +8,8 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var animated_sprite = $AnimatedSprite2D
 
+var is_attacking = false
+
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
@@ -28,17 +30,27 @@ func _physics_process(delta):
 	
 	# Play animations
 	if is_on_floor():
-		if direction == 0:
+		if direction == 0 && is_attacking == false:
 			animated_sprite.play("idle")
-		else:
+		elif is_attacking == false:
 			animated_sprite.play("run")
 	else:
 		animated_sprite.play("jump")
-	
+		
 	# Apply movement
 	if direction:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
+		
+	if Input.is_action_just_pressed("attack") and is_on_floor():
+		animated_sprite.play("attack")
+		#print("Animation State: " + animated_sprite.animation)
+		is_attacking = true
 
 	move_and_slide()
+
+func _on_animated_sprite_2d_animation_finished():
+	#print("animation: " + animated_sprite.animation)
+	if animated_sprite.animation == "attack":
+		is_attacking = false
