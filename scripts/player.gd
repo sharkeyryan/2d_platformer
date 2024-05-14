@@ -7,8 +7,12 @@ const JUMP_VELOCITY = -300.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 @onready var animated_sprite = $AnimatedSprite2D
+@onready var attack_area = $AttackArea
 
 var is_attacking = false
+
+func _ready():
+	attack_area.get_node("CollisionShape2D").disabled = true
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -47,6 +51,7 @@ func _physics_process(delta):
 		animated_sprite.play("attack")
 		#print("Animation State: " + animated_sprite.animation)
 		is_attacking = true
+		attack_area.get_node("CollisionShape2D").disabled = false
 
 	move_and_slide()
 
@@ -54,3 +59,4 @@ func _on_animated_sprite_2d_animation_finished():
 	#print("animation: " + animated_sprite.animation)
 	if animated_sprite.animation == "attack":
 		is_attacking = false
+		attack_area.get_node("CollisionShape2D").disabled = true
