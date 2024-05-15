@@ -1,7 +1,8 @@
-[gd_scene load_steps=42 format=3 uid="uid://cfhpu46yu8xth"]
+[gd_scene load_steps=43 format=3 uid="uid://cfhpu46yu8xth"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_d3l3y"]
 [ext_resource type="Texture2D" uid="uid://dhm84d06qymjm" path="res://sprites/character/png/green/char_green_1.png" id="2_s7a5r"]
+[ext_resource type="AudioStream" uid="uid://chtdwdambxpdh" path="res://sounds/fast_sword.wav" id="3_n5swa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rayp7"]
 atlas = ExtResource("2_s7a5r")
@@ -291,12 +292,14 @@ script = ExtResource("1_d3l3y")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -28)
 sprite_frames = SubResource("SpriteFrames_7g1dl")
-animation = &"attack"
-frame = 3
+animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -16)
 shape = SubResource("CapsuleShape2D_8jg47")
+
+[node name="FastSword" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_n5swa")
 
 [node name="AttackAreaRight" type="Area2D" parent="." groups=["Sword"]]
 position = Vector2(16, -17)

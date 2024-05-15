@@ -1,6 +1,6 @@
-[gd_scene load_steps=30 format=3 uid="uid://vp6iels2an4y"]
+[gd_scene load_steps=31 format=3 uid="uid://vp6iels2an4y"]
 
-[ext_resource type="Script" path="res://sprites/game_manager.gd" id="1_5npik"]
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_5npik"]
 [ext_resource type="PackedScene" uid="uid://cfhpu46yu8xth" path="res://scenes/player.tscn" id="1_ywlfg"]
 [ext_resource type="Texture2D" uid="uid://dq5sbfkvxhexl" path="res://sprites/oak_woods_v1.0/oak_woods_tileset.png" id="2_ho1eq"]
 [ext_resource type="Texture2D" uid="uid://dhfs7nihf86td" path="res://sprites/oak_woods_v1.0/background/background_layer_1.png" id="2_sg1n0"]
@@ -22,6 +22,7 @@
 [ext_resource type="Texture2D" uid="uid://bc1r1hpahnptb" path="res://sprites/oak_woods_v1.0/decorations/rock_3.png" id="20_u3k2p"]
 [ext_resource type="Texture2D" uid="uid://4wqvknldfkqc" path="res://sprites/oak_woods_v1.0/decorations/lamp.png" id="21_w1qq1"]
 [ext_resource type="Texture2D" uid="uid://bug5l2h8qpycg" path="res://sprites/oak_woods_v1.0/decorations/rock_2.png" id="22_hf08h"]
+[ext_resource type="PackedScene" uid="uid://c3rsunnhxpmo8" path="res://scenes/enemy_barrier.tscn" id="23_hjv7n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_auvt8"]
 texture = ExtResource("2_ho1eq")
@@ -1535,6 +1536,14 @@ texture = ExtResource("21_w1qq1")
 position = Vector2(-75, 76)
 texture = ExtResource("15_acp4p")
 
+[node name="Rock2" type="Sprite2D" parent="decorations"]
+position = Vector2(-512, 49)
+texture = ExtResource("22_hf08h")
+
+[node name="Grass14" type="Sprite2D" parent="decorations"]
+position = Vector2(-476, 52)
+texture = ExtResource("15_acp4p")
+
 [node name="Coins" type="Node" parent="."]
 
 [node name="coin" parent="Coins" instance=ExtResource("8_dpnev")]
@@ -1582,12 +1591,10 @@ position = Vector2(278, 15)
 position = Vector2(-106, 77)
 
 [node name="slime2" parent="Enemies" instance=ExtResource("9_smji4")]
-position = Vector2(-456, 54)
+position = Vector2(-509, 55)
 
-[node name="Rock2" type="Sprite2D" parent="."]
-position = Vector2(-625, -28)
-texture = ExtResource("22_hf08h")
+[node name="EnemyBarrier" parent="." instance=ExtResource("23_hjv7n")]
+position = Vector2(-647, -18)
 
-[node name="Grass3" type="Sprite2D" parent="."]
-position = Vector2(-589, -25)
-texture = ExtResource("15_acp4p")
+[node name="EnemyBarrier2" parent="." instance=ExtResource("23_hjv7n")]
+position = Vector2(-540, -18)

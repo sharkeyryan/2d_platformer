@@ -1,9 +1,9 @@
 [gd_scene load_steps=18 format=3 uid="uid://b4tjgro40wqpj"]
 
-[ext_resource type="Script" path="res://sprites/slime.gd" id="1_64i4e"]
+[ext_resource type="Script" path="res://scripts/slime.gd" id="1_64i4e"]
 [ext_resource type="Texture2D" uid="uid://f6bjw5y25civ" path="res://sprites/slime_purple.png" id="1_gan7k"]
 [ext_resource type="PackedScene" uid="uid://cq8cx5k5loga" path="res://scenes/killzone.tscn" id="2_3afdu"]
-[ext_resource type="Script" path="res://scenes/Hitbox.gd" id="3_uli73"]
+[ext_resource type="AudioStream" uid="uid://dgkoxg0vcitbx" path="res://sounds/slime-squelch.mp3" id="3_m01dp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wwtae"]
 atlas = ExtResource("1_gan7k")
@@ -72,6 +72,15 @@ animations = [{
 "texture": SubResource("AtlasTexture_qqaky")
 }, {
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_qqaky")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qqaky")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qqaky")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_2dopt")
 }, {
 "duration": 1.0,
@@ -86,9 +95,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_s5pnm")
 }],
-"loop": true,
+"loop": false,
 "name": &"die",
-"speed": 4.0
+"speed": 8.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lf4ow"]
@@ -97,7 +106,7 @@ size = Vector2(10, 12)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aqbxd"]
 size = Vector2(10, 14)
 
-[node name="slime" type="Node2D"]
+[node name="Area2D" type="Area2D"]
 script = ExtResource("1_64i4e")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -105,14 +114,15 @@ position = Vector2(0, -12)
 sprite_frames = SubResource("SpriteFrames_kjkyk")
 animation = &"die"
 autoplay = "default"
-frame_progress = 0.652434
 
-[node name="Hitbox" type="Area2D" parent="."]
-script = ExtResource("3_uli73")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -6)
 shape = SubResource("RectangleShape2D_lf4ow")
+
+[node name="Squelch" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(0, -12)
+stream = ExtResource("3_m01dp")
+volume_db = -18.802
 
 [node name="killzone" parent="." instance=ExtResource("2_3afdu")]
 position = Vector2(0, -12)
@@ -124,9 +134,14 @@ shape = SubResource("RectangleShape2D_aqbxd")
 [node name="RayCastRight" type="RayCast2D" parent="."]
 position = Vector2(0, -7)
 target_position = Vector2(9, 0)
+collision_mask = 5
+collide_with_areas = true
 
 [node name="RayCastLeft" type="RayCast2D" parent="."]
 position = Vector2(0, -7)
 target_position = Vector2(-9, 0)
+collision_mask = 5
+collide_with_areas = true
 
-[connection signal="area_entered" from="Hitbox" to="Hitbox" method="_on_area_entered"]
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

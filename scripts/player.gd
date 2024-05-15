@@ -9,6 +9,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var animated_sprite = $AnimatedSprite2D
 @onready var attack_area_right = $AttackAreaRight
 @onready var attack_area_left = $AttackAreaLeft
+@onready var fast_sword = $FastSword
 
 var is_attacking = false
 var on_ground = true
@@ -53,10 +54,10 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		
-	if Input.is_action_just_pressed("attack") and is_on_floor():
+	if Input.is_action_just_pressed("attack") and is_on_floor() and is_attacking == false:
 		on_ground = true
 		animated_sprite.play("attack")
-		#print("Animation State: " + animated_sprite.animation)
+		fast_sword.play()
 		is_attacking = true
 		
 		if facing_right == true:
